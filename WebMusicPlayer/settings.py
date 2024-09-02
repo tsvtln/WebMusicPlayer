@@ -74,7 +74,7 @@ DATABASES = {
 }
 
 DATABASE_URL = "sqlite:///music_db.sqlite3"
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URL, echo=True)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 session = Session()
