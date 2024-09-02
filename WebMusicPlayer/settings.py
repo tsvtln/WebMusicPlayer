@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "WebMusicPlayer.musics.apps.MusicsConfig"
 ]
 
 MIDDLEWARE = [
@@ -80,11 +81,11 @@ WSGI_APPLICATION = "WebMusicPlayer.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3" / "music.db",
+        "NAME": BASE_DIR / "music_db.sqlite3",
     }
 }
 
-DATABASE_URL = "sqlite:///db.sqlite3/music.db"
+DATABASE_URL = "sqlite:///music_db.sqlite3"
 engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
@@ -125,6 +126,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "resources/static/"
+STATICFILES_DIRS = (
+    BASE_DIR / "resources/static",
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
