@@ -7,7 +7,7 @@ from WebMusicPlayer.settings import Base
 
 class Album(Base):
 
-    __tablename__ = "album"
+    __tablename__ = "albums"
 
     id = Column(
         Integer,
@@ -25,12 +25,12 @@ class Album(Base):
         nullable=False,
     )
 
-    Price = Column(
+    price = Column(
         Float,
         nullable=False,
     )
 
-    Songs = relationship(
+    songs = relationship(
         "Song",
         back_populates="album",
         cascade="all, delete-orphan",
@@ -52,7 +52,7 @@ class Song(Base):
 
     album_id = Column(
         Integer,
-        ForeignKey("album.id"),
+        ForeignKey("albums.id"),
         nullable=False,
     )
 
