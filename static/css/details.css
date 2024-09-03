@@ -52,7 +52,7 @@
 .albumText > p, .profileText > p {
     height: auto;
     width: 100%;
-    color: #9F9991;
+    color: whitesmoke;
     line-height: 1.6em;
     font-size: 18px;
     font-weight: bold;
@@ -95,4 +95,40 @@
 
 .actionBtn > a:hover {
 	background-position: right;
+}
+
+.song-name {
+    background-color: #2c2c2c;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+    color: white;
+    margin-bottom: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.song-name:hover {
+    background-color: #444444;
+}
+
+.songs-text {
+    background-color: #2c2c2c;
+    padding: 5px 5px;
+    border-radius: 1px;
+    color: white;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.album-title {
+    background-color: #2c2c2c;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
 }

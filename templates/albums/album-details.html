@@ -1,37 +1,41 @@
 {% extends 'common/base.html' %}
-{% block content%}
+{% block content %}
 
-<!--Details Page-->
-<section id="detailsPage">
-    <div class="wrapper">
+    <!--Details Page-->
+    <section id="detailsPage">
+        <div class="wrapper">
 
-        <div class="albumCover">
-            <!-- Album Image -->
-            <img src="{{ album.image_url }}" alt="Cover Image">
-        </div>
-
-        <div class="albumInfo">
-
-            <div class="albumText">
-                <!-- Album Info -->
-                <h1>Name: {{ album.album_name }}</h1>
-                <h4>Price: ${{ album.price }}</h4>
-                <h4>Songs: 
-                    {% for song in album.songs %}
-                        <a href="#"> {{ song.song_name }} </a>
-                        {% if not forloop.last %} | {% endif %}
-                    {% endfor %}
-                </h4>
+            <div class="albumCover">
+                <!-- Album Image -->
+                <img src="{{ album.image_url }}" alt="Cover Image">
             </div>
 
-            <div class="actionBtn">
-                <!-- Album Buttons -->
-                <a href="{% url 'edit_album' album.id %}" class="edit">Edit</a>
-                <a href="{% url 'delete_album' album.id %}" class="remove">Delete</a>
-            </div>
+            <div class="albumInfo">
 
+                <div class="albumText">
+                    <!-- Album Info -->
+                        <h1 class="album-title">Album Name: {{ album.album_name }}</h1>
+{#                    <h4>Price: ${{ album.price }}</h4>#}
+                        <p class="songs-text">SONGS</p> 
+                        {#                    {% for song in album.songs %}#}
+                        {#                        <a href="{% url 'play song' song.id %}"> {{ song.song_name }} </a>#}
+                        {#                        {% if not forloop.last %} \n {% endif %}#}
+                        {#                    {% endfor %}#}
+{#                        <h4>Songs:</h4>#}
+                        {% for song in album.songs %}
+                            <p><a href="{% url 'play song' song.id %}" class="song-name">{{ song.song_name }}</a></p>
+                        {% endfor %}
+                    </h4>
+                </div>
+
+                <div class="actionBtn">
+                    <!-- Album Buttons -->
+                    <a href="{% url 'edit_album' album.id %}" class="edit">Edit</a>
+                    <a href="{% url 'delete_album' album.id %}" class="remove">Delete</a>
+                </div>
+
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 {% endblock %}

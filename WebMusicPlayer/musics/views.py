@@ -1,8 +1,11 @@
+from lib2to3.fixes.fix_input import context
+
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from WebMusicPlayer.common.session_decorator import session_decorator
-from WebMusicPlayer.musics.forms import SongCreateForm, AlbumCreateForm, AlbumEditForm
-from WebMusicPlayer.musics.models import Album
+from WebMusicPlayer.musics.forms import SongCreateForm, AlbumCreateForm, AlbumEditForm, AlbumDeleteForm
+from WebMusicPlayer.musics.models import Album, Song
 from WebMusicPlayer.settings import session
 
 
@@ -56,7 +59,30 @@ def edit_album(request, pk: int):
     return render(request, 'albums/edit-album.html', context)
 
 def delete_album(request, pk: int):
-    return render(request, 'albums/delete-album.html')
+
+    album = (session.query(Album).filter(Album.id == pk).first())
+    
+    if request.method == 'GET':
+        form = AlbumDeleteForm(
+            initial={
+                'album_name': album.album_name,
+                'image_url': album.image_url,
+                'price': album.price,
+            })
+    else:
+        # form = AlbumDeleteForm(request.POST)
+        #
+        # if form.is_valid():
+        session.delete(album)
+        return redirect('index')
+
+    context = {
+        'album': album,
+        'form': form,
+    }
+        
+
+    return render(request, 'albums/delete-album.html', context)
 
 @session_decorator(session)
 def album_details(request, pk: int):
@@ -71,10 +97,10 @@ def create_song(request):
     if request.method == 'GET':
         form = SongCreateForm()
     else:
-        form = SongCreateForm(request.POST)
+        form = SongCreateForm(request.POST, request.FILES)
 
         if form.is_valid():
-            form.save()
+            form.save(request)
             return redirect('index')
 
     context = {
@@ -82,3 +108,36 @@ def create_song(request):
     }
 
     return render(request, 'songs/create-song.html', context)
+
+@session_decorator(session)
+def play_song(request, pk: int):
+    """
+    Greps the song and returns the song as an object
+    """
+
+    song = session.query(Song).filter(Song.id == pk).first()
+
+    context = {
+        'song': song,
+    }
+
+    return render(request, 'songs/music-player.html', context)
+
+
+
+@session_decorator(session)
+def serve_song(request, pk: int):
+
+    """
+    Greps the song from the database and provides it to the serve.
+    """
+    song = session.query(Song).filter(Song.id == pk).first()
+
+    if song:
+        response = HttpResponse(song.music_file_data, content_type='audio/mpeg')
+        response['Content-Disposition'] = f'inline; filename="{song.song_name}.mp3"'
+
+        return response
+
+    else:
+        return HttpResponse('Song not found', status=404)
