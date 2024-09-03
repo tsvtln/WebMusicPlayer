@@ -3,20 +3,23 @@
 <!--Create Page-->
 <section class="createPage">
 
-    <form>
+    <form action="{% url 'create_album' %}" method="post">
         <fieldset>
             <legend>Add Album</legend>
             <div class="container">
+                
+                {{ form }}
+                {% csrf_token %}
 
                 <!-- Form for Adding Album -->
-                <label for="name">Album Name:</label>
-                <input id="name" type="text" required>
-
-                <label for="imgUrl">Image URL:</label>
-                <input id="imgUrl" type="url" required>
-
-                <label for="price">Price:</label>
-                <input id="price" type="number" required>
+{#                <label for="name">Album Name:</label>#}
+{#                <input id="name" type="text" required>#}
+{##}
+{#                <label for="imgUrl">Image URL:</label>#}
+{#                <input id="imgUrl" type="url" required>#}
+{##}
+{#                <label for="price">Price:</label>#}
+{#                <input id="price" type="number" required>#}
 
                 <!-- Button for Adding Album -->
                 <button class="add-album" type="submit">Add New Album</button>

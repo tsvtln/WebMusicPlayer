@@ -8,6 +8,7 @@
     <title>My Music App</title>
     <!-- Static Load -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -16,7 +17,7 @@
     <!-- Navigation Bar -->
     <header>
         <nav>
-            <img src="{% static 'images/headphones.png' %}" alt="headphones">
+            <img src="{% static 'images/cute-dancing.gif' %}" alt="headphones">
             <a href="{% url 'index' %}">Home</a><ul></ul>
             <ul>
                 <li><a href="{% url 'create_album' %}">Create Album</a></li>
